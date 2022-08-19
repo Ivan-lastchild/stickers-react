@@ -1,25 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { useEffect, useState } from "react";
+import "./App.css";
+import Board from "./components/Board";
+import dataURL from "./Data/data";
+import EmptyCard from "./components/EmptyCard";
+import axios from "axios"
 
-function App() {
+export default function App() {
+  const [card, setCard] = useState([]);
+  const [addingCard, setAddingCard] = useState(false);
+
+  useEffect(() => {
+    axios.get(dataURL)
+      .then(resp => setCard(resp.data));
+  }, []);
+
+  function addCard() {
+    setAddingCard(true);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="board">
+      <div className="header-board">
+        <button className="add-card-btn" onClick={addCard}>
+          {!addingCard ? "Add card" : ""}
+        </button>
+      </div>
+      {!addingCard ? (
+        <Board card={card} setCard={setCard} />
+      ) : (
+        <EmptyCard
+          card={card}
+          setCard={setCard}
+          addingCard={addingCard}
+          setAddingCard={setAddingCard}
+        />
+      )}
     </div>
   );
 }
-
-export default App;

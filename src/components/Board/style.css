@@ -1,0 +1,52 @@
+.board-body{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.stickers-card {
+    width: 200px;
+    height: 300px;
+    border: 1px solid #808080;
+    border-radius: .5em;
+    text-align: center;
+    margin: 5px;
+    transition: all 0.2s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.stickers-card:hover{
+    box-shadow: 10px 10px 142px -55px rgba(0,0,0,0.75);
+    transition: all 0.2s;
+}
+
+.title{
+    padding: 5px 10px;
+}
+
+.cardText {
+    flex-grow: 1;
+    padding: 5px 10px;
+}
+
+.cardText input,
+.cardText input:focus {
+    border: none;
+    text-align: center;
+}
+
+.control {
+    margin: 5px;
+}
+
+.button-save-hide,
+.button-edit-hide,
+.editField-hide {
+    display: none;
+}
+
+button {
+    margin: 5px;
+}
