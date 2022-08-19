@@ -8,6 +8,13 @@ export default function EmptyCard(props) {
   const [newCardText, setNewCardText] = useState("");
 
   function addCard() {
+    if(!newCardText){
+      alert("write smth in the card`s placeholder");
+      return
+    } else {
+      setNewCardText(newCardText);
+    }
+
     axios
       .post(dataURL, {
         description: newCardText,
