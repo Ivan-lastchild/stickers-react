@@ -1,18 +1,28 @@
+.board {
+    height: 100vh;
+}
+
 .header-board {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.add-card-btn {
+.add-card-btn,
+.change-theme-btn {
     display: block;
     width: 100px;
     height: 45px;
     cursor: pointer;
-    background-color: cadetblue;
+    background-color: #00008b;
     border-radius: 0.5em;
     border: none;
     color: white;
+}
+
+.add-card-btn:active,
+.change-theme-btn:active{
+    background-color: #0000cb;
 }
 
 .add-card:hover {

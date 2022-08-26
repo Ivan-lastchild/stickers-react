@@ -1,61 +1,61 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import dataURL from "../../Data/data";
 import axios from "axios";
+import ContextTheme from "../../Context/ContextTheme";
+import { Link } from "react-router-dom";
 
 export default function Card(props) {
-    const {id, description, deleteCard} = props;
+    const { id, description, deleteCard} = props;
     const [btnSaveHide, setBtnSaveHide] = useState(true);
-    const [btnEditHide, setBtnEditHide] = useState (false);
+    const [btnEditHide, setBtnEditHide] = useState(false);
     const [textareaHide, setTextareaHide] = useState(true);
-    const [cardText, setCardText] = useState(description)
+    const [cardText, setCardText] = useState(description);
+    const { theme } = useContext(ContextTheme);
 
-    function editCard(){
+    function editCard() {
         setBtnSaveHide(!btnSaveHide);
         setBtnEditHide(!btnEditHide);
         setTextareaHide(false);
     }
 
-    function saveCard(id){
+    function saveCard(id) {
+        axios.put(dataURL + "/" + id, {
+            description: cardText,
+        })
+        .then(resp => setCardText(resp.data.description))
+
         setBtnEditHide(!btnEditHide);
         setBtnSaveHide(!btnSaveHide);
         setTextareaHide(true);
-
-        axios.put(dataURL + "/" + id, {
-            description: cardText
-        })
     }
 
     return (
-        <div className = "stickers-card">
-            <div className="title">
-                FlashCard {id}
-            </div>
-            <div className="cardText">
-                {cardText} 
-            </div>
-            <textarea 
-                defaultValue = {description}
+        <div className="stickers-card" style={theme}>
+            <div className="title">FlashCard {id}</div>
+            <div className="cardText">{cardText}</div>
+            <textarea
+                defaultValue={description}
                 className={"editField" + (textareaHide ? "-hide" : "")}
-                onChange={e => setCardText(e.target.value)}
+                onChange={(e) => setCardText(e.target.value)}
             />
             <div className="control">
-                <button 
-                    onClick={() => saveCard(id)} 
-                    className={"button-save" + (btnSaveHide ? "-hide" : "")}
-                >
-                    Save
-                </button>
-                <button 
+                <Link to="/">
+                    <button
+                        onClick={() => saveCard(id)}
+                        className={"button-save" + (btnSaveHide ? "-hide" : "")}
+                    >
+                        Save
+                    </button>
+                </Link>
+                <button
                     className={"button-edit" + (btnEditHide ? "-hide" : "")}
-                    onClick={() => editCard()} 
+                    onClick={() => editCard()}
                 >
                     Edit
                 </button>
-                <button 
-                    onClick={() => deleteCard(id)}
-                >
-                    Delete
-                </button>
+                <Link to="/">
+                    <button onClick={() => deleteCard(id)}>Delete</button>
+                </Link>
             </div>
         </div>
     );
